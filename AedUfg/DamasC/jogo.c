@@ -19,7 +19,7 @@
         
         printBoard(screen, grid);
         int movechoosed = 0;
- 
+        
             while (!movechoosed) {
                 click = getClick(screen);
 

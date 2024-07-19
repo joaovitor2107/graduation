@@ -7,7 +7,7 @@
 
 #define MAX_LINE_LENGTH 200
 
-int count_format_specifiers(const char *format) {
+int count_format(const char *format) {
     int count = 0;
     while (*format) {
         if (*format == '%' && *(format + 1) != '%') {
@@ -19,13 +19,13 @@ int count_format_specifiers(const char *format) {
     return count;
 }
 
-int is_printf_correct(const char *format, ...) {
+int check_printf(const char *format, ...) {
 
     va_list args;
     va_start(args, format);
 
 
-    int expected_args = count_format_specifiers(format);
+    int expected_args = count_format(format);
 
     int actual_args = 0;
 
@@ -68,11 +68,11 @@ int is_printf_correct(const char *format, ...) {
     return expected_args == actual_args;
 }
 
-bool is_scanf_correct(const char *format, ...) {
+bool check_scanf(const char *format, ...) {
     va_list args;
     va_start(args, format);
 
-    int expected_args = count_format_specifiers(format);
+    int expected_args = count_format(format);
     int actual_args = 0;
 
     while (*format) {
@@ -113,7 +113,7 @@ bool is_scanf_correct(const char *format, ...) {
     return expected_args == actual_args;
 }
 
-bool is_loop_syntax_correct(const char *code) {
+bool check_loop(const char *code) {
     int parens = 0;
     int braces = 0;
 
@@ -121,21 +121,21 @@ bool is_loop_syntax_correct(const char *code) {
         if (strncmp(code, "for", 3) == 0 && !isalnum(*(code + 3)) && *(code + 3) != '_') {
             code += 3;
             while (*code && isspace(*code)) code++;
-            if (*code != '(') return false;
+            if (*code != '(' ) return false;
             parens++;
         } else if (strncmp(code, "while", 5) == 0 && !isalnum(*(code + 5)) && *(code + 5) != '_') {
             code += 5;
             while (*code && isspace(*code)) code++;
-            if (*code != '(') return false;
+            if (*code != '(' ) return false;
             parens++;
         } else if (*code == '(') {
             parens++;
         } else if (*code == ')') {
             parens--;
             if (parens < 0) return false;
-        } else if (*code == '{') {
+        } else if (*code == '{' ) {
             braces++;
-        } else if (*code == '}') {
+        } else if (*code == '}' ) {
             braces--;
             if (braces < 0) return false;
         }
@@ -145,7 +145,7 @@ bool is_loop_syntax_correct(const char *code) {
     return parens == 0 && braces == 0;
 }
 
-bool is_if_else_correct(const char *code) {
+bool check_if_else(const char *code) {
     int if_count = 0;
     int else_count = 0;
     int parens = 0;
@@ -155,7 +155,7 @@ bool is_if_else_correct(const char *code) {
             if_count++;
             code += 2;
             while (*code && isspace(*code)) code++;
-            if (*code != '(') return false;
+            if (*code != '(' ) return false;
             parens++;
         } else if (strncmp(code, "else", 4) == 0 && !isalnum(*(code + 4)) && *(code + 4) != '_') {
             else_count++;
@@ -164,7 +164,7 @@ bool is_if_else_correct(const char *code) {
             if (strncmp(code, "if", 2) == 0 && !isalnum(*(code + 2)) && *(code + 2) != '_') {
                 code += 2;
                 while (*code && isspace(*code)) code++;
-                if (*code != '(') return false;
+                if (*code != '(' ) return false;
                 parens++;
             }
         } else {
@@ -236,36 +236,37 @@ void check_syntax(const char *filename) {
             if (strstr(line, keywords[i])) {
                 if (strcmp(keywords[i], "printf") == 0) {
                     char *format = strchr(line, '(');
-                    if (format) {
+                    if (format){
                         format++;
-                        char *end = strchr(format, ')');
+                        char *end = strchr(format, ')' );
                         if (end) {
                             *end = '\0';
-                            if (!is_printf_correct(format)) {
+                            if (!check_printf(format)) {
                                 printf("Error: Incorrect printf at line %d\n", line_number);
                             }
                         }
                     }
-                } else if (strcmp(keywords[i], "scanf") == 0) {
+                } 
+                else if (strcmp(keywords[i], "scanf") == 0) {
                     char *format = strchr(line, '(');
                     if (format) {
                         format++;
                         char *end = strchr(format, ')');
                         if (end) {
                             *end = '\0';
-                            if (!is_scanf_correct(format)) {
+                            if (!check_scanf(format)) {
                                 printf("Error: Incorrect scanf at line %d\n", line_number);
                             }
                         }
                     }
 
-
-                } else if (strcmp(keywords[i], "for") == 0 || strcmp(keywords[i], "while") == 0) {
-                    if (!is_loop_syntax_correct(line)) {
+                } 
+                else if (strcmp(keywords[i], "for") == 0 || strcmp(keywords[i], "while") == 0) {
+                    if (!check_loop(line)) {
                         printf("Error: Incorrect loop syntax at line %d\n", line_number);
                     }
                 } else if (strcmp(keywords[i], "if") == 0 || strcmp(keywords[i], "else") == 0) {
-                    if (!is_if_else_correct(line)) {
+                    if (!check_if_else(line)) {
                         printf("Error: Incorrect if-else syntax at line %d\n", line_number);
                     }
                 }
