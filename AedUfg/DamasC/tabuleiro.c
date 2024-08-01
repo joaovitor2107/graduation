@@ -13,7 +13,7 @@ void printBoard(SDL_Surface *screen, gridType grid[][8]) {
     position.x = 0;
     position.y = 0;
 
-    for (int i = 0; i < SQUARE_NUMBERS; i++) {
+    for(int i = 0; i < SQUARE_NUMBERS; i++) {
         for (int j = 0; j < SQUARE_NUMBERS; j++) {
             position.x = j * 100;
             position.y = i * 100;

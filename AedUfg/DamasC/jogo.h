@@ -24,10 +24,10 @@
    /* a procedure to refresh the board after every move */ 
     void refreshBoard(int turn, gridType grid[][8], Positions from, Positions dest);
 
-   /* a procedure to remove the taken piece from the board */ 
+   // a procedure to remove the taken piece from the board 
     int takePiece(int turn, gridType grid[][8], Positions from, Positions dest);
 
-    /* The win function: returns WHITE if the winner is white player, else returns RED */ 
+    // The win function: returns WHITE if the winner is white player, else returns RED  
     int win(gridType grid[][8]);
 
 

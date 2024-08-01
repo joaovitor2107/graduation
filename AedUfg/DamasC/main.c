@@ -22,8 +22,7 @@ int main(int argc, char *agrv[]){
 
     screen = SDL_SetVideoMode(1000, 800, 32, SDL_HWSURFACE | SDL_DOUBLEBUF);
 
-    if (screen == NULL)
-    {
+    if (screen == NULL){
         fprintf(stderr, "Initialisation SDL error! %s\n",SDL_GetError());
         exit(EXIT_FAILURE);
     }

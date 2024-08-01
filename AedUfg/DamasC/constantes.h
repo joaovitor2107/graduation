@@ -33,9 +33,16 @@
         int y;
     };
 
-    typedef struct {
+    typedef struct Move Move;
+    struct Move{
         Positions from;
-        Positions to;
-    } Move;
+        Positions dest;
+    };
+
+    typedef struct list list;
+    struct list{
+        Move moves;
+        list *next;
+    };
 
 #endif

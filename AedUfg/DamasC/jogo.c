@@ -12,51 +12,72 @@
         int turn = RED;
         int valid;
         gridType copyGrid[8][8];
+        Move bestMove;
         
         initBoard(grid);
 
-    while (!gameover) {
+        while (!gameover) {
         
         printBoard(screen, grid);
         int movechoosed = 0;
-        
-            while (!movechoosed) {
-                click = getClick(screen);
 
-                if ((click.x > 7) || (click.x < 0) || (click.y > 7) || (click.y < 0)) {
-                    exit(0);
-                } else if (validFromPiece(turn, grid, click)) {
-                    fromPositions = click;
-                    printBoard(screen, grid);
-                } else if (validDestPiece(turn, grid, fromPositions, click)) {
-                    destPositions = click;
-                    movechoosed = 1;
-                } else if (takePiece(turn, grid, fromPositions, click) == WHITE_LEFT) {
-                    destPositions = click;
-                    grid[fromPositions.x + 1][fromPositions.y - 1].color = UNDEFINED;
-                    grid[fromPositions.x + 1][fromPositions.y - 1].state = EMPTY;
-                    movechoosed = 1;
-                } else if (takePiece(turn, grid, fromPositions, click) == WHITE_RIGHT) {
-                    destPositions = click;
-                    grid[fromPositions.x + 1][fromPositions.y + 1].color = UNDEFINED;
-                    grid[fromPositions.x + 1][fromPositions.y + 1].state = EMPTY;
-                    movechoosed = 1;
-                } else if (takePiece(turn, grid, fromPositions, click) == RED_LEFT) {
-                    destPositions = click;
-                    grid[fromPositions.x - 1][fromPositions.y - 1].color = UNDEFINED;
-                    grid[fromPositions.x - 1][fromPositions.y - 1].state = EMPTY;
-                    movechoosed = 1;
-                } else if (takePiece(turn, grid, fromPositions, click) == RED_RIGHT) {
-                    destPositions = click;
-                    grid[fromPositions.x - 1][fromPositions.y + 1].color = UNDEFINED;
-                    grid[fromPositions.x - 1][fromPositions.y + 1].state = EMPTY;
-                    movechoosed = 1;
+            if(turn == WHITE){
+                copy(copyGrid, grid);
+                minimax(6, copyGrid, WHITE, &bestMove);
+                fromPositions = bestMove.from;
+                destPositions = bestMove.dest;
+                
+                if((bestMove.from.x - 2) == bestMove.dest.x || (bestMove.from.x + 2) == bestMove.dest.x || 
+                (bestMove.from.y - 2 == bestMove.dest.y) || (bestMove.from.y + 2 == bestMove.dest.y)){
+                    int tempX, tempY;
+
+                    tempX = (bestMove.from.x + bestMove.dest.x)/2;
+                    tempY = (bestMove.from.y + bestMove.dest.y)/2;
+
+                    grid[tempX][tempY].state = EMPTY;
+                    grid[tempX][tempY].color = UNDEFINED;
+                    grid[tempX][tempY].king = FALSE;
                 }
             }
-        
+            else{
+                while (!movechoosed) {
+
+                    click = getClick(screen);   
+
+                    if ((click.x > 7) || (click.x < 0) || (click.y > 7) || (click.y < 0)) {
+                        exit(0);
+                    } else if (validFromPiece(turn, grid, click)) {
+                        fromPositions = click;
+                        printBoard(screen, grid);
+                    }else if (validDestPiece(turn, grid, fromPositions, click)) {
+                        destPositions = click;
+                        movechoosed = 1;
+                    } else if (takePiece(turn, grid, fromPositions, click) == WHITE_LEFT) {
+                        destPositions = click;
+                        grid[fromPositions.x + 1][fromPositions.y - 1].color = UNDEFINED;
+                        grid[fromPositions.x + 1][fromPositions.y - 1].state = EMPTY;
+                        movechoosed = 1;
+                    } else if (takePiece(turn, grid, fromPositions, click) == WHITE_RIGHT) {
+                        destPositions = click;
+                        grid[fromPositions.x + 1][fromPositions.y + 1].color = UNDEFINED;
+                        grid[fromPositions.x + 1][fromPositions.y + 1].state = EMPTY;
+                        movechoosed = 1;
+                    } else if (takePiece(turn, grid, fromPositions, click) == RED_LEFT) {
+                        destPositions = click;
+                        grid[fromPositions.x - 1][fromPositions.y - 1].color = UNDEFINED;
+                        grid[fromPositions.x - 1][fromPositions.y - 1].state = EMPTY;
+                        movechoosed = 1;
+                    } else if (takePiece(turn, grid, fromPositions, click) == RED_RIGHT) {
+                        destPositions = click;
+                        grid[fromPositions.x - 1][fromPositions.y + 1].color = UNDEFINED;
+                        grid[fromPositions.x - 1][fromPositions.y + 1].state = EMPTY;
+                        movechoosed = 1;
+                    }
+                }
+            }
 
         refreshBoard(turn, grid, fromPositions, destPositions);
-        turn = -turn;
+
 
         if (win(grid) == WHITE) {
             printf("THE WINNER IS THE WHITE PLAYER\n");
@@ -65,6 +86,8 @@
             printf("THE WINNER IS THE RED PLAYER\n");
             gameover = 1;
         }
+
+        turn = -turn;
     }
 
     exit(0);
@@ -223,10 +246,6 @@
                 }
                 else if(grid[i][j].color == WHITE){
                     whitePieces++;
-                }
-
-                if(whitePieces > 0 && redPieces > 0){
-                    return 0;
                 }
 
             }
