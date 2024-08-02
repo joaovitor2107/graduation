@@ -194,7 +194,7 @@ int minimax(int depth, gridType grid[][8], int player, Move *bestMove){
         return result;
     }
 
-    Move moves[100];
+    Move moves[96]; //suposing all pieces are kings and all pieces have all the moves possible 
     int num_moves = possibleMoves(grid, moves, player);
     if(num_moves == 0){
         return result;
