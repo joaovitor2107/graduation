@@ -18,7 +18,7 @@
     int possibleMoves(gridType grid[][8], Move moves[], int player);
 
     // Minimax algorithm function
-    int minimax(int depth, gridType grid[][8], int player, Move *bestMove);
+    int minimax(int depth, gridType grid[][8], int player, Move *bestMove, int alpha, int beta);
 
     // Function to evaluate the board state 
     int evaluate(gridType grid[][8]);

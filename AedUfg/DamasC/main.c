@@ -9,7 +9,7 @@
 //the checkers game is from MARVEL-PROJECTS/Checkers-Game on github, with a few changes(like adding a king) and correcting some details
 
 #include "bot.h"
-//the bot code is totally mine and the implementation aswell
+//the bot code is totally mine and the implementation aswell (implemented using a minimax alghoritm and using alpha beta prunnig)
 
 void pause();
 

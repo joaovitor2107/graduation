@@ -22,13 +22,13 @@ int evaluate(gridType grid[][8]){
             if(grid[i][j].color == RED){
                 red_pieces++;
                 if(grid[i][j].king == TRUE){
-                    red_pieces += 0.5;
+                    red_pieces+= 0.5;
                 }
             }
             else if(grid[i][j].color == WHITE){
                 white_pieces++;
                 if(grid[i][j].king == TRUE){
-                    white_pieces += 0.5;
+                    white_pieces+= 0.5;
                 }
             }
         }
@@ -187,7 +187,7 @@ void makeMove(gridType grid[][8] ,Move *move){
 }
 
 
-int minimax(int depth, gridType grid[][8], int player, Move *bestMove){ 
+int minimax(int depth, gridType grid[][8], int player, Move *bestMove, int alpha, int beta){ 
 
     int result = evaluate(grid);
     if(depth <= 0){
@@ -211,7 +211,15 @@ int minimax(int depth, gridType grid[][8], int player, Move *bestMove){
 
             makeMove(auxGrid, &moves[i]);
 
-            value = minimax(depth - 1, auxGrid, RED, NULL);
+            value = minimax(depth - 1, auxGrid, RED, NULL, alpha, beta);
+
+            if(alpha < value){
+                alpha = value;
+            }
+
+            if(beta <= alpha){
+                return alpha;
+            }
 
             if(value > maxEval){
                 maxEval = value;
@@ -234,7 +242,15 @@ int minimax(int depth, gridType grid[][8], int player, Move *bestMove){
 
             makeMove(auxGrid, &moves[i]);
 
-            int value = minimax(depth - 1, auxGrid, WHITE, NULL);
+            int value = minimax(depth - 1, auxGrid, WHITE, NULL, alpha, beta);
+
+            if(beta > value){
+                beta = value;
+            }
+
+            if(beta <= alpha){
+                return beta;
+            }
 
             if (value < minEval) {
                 minEval = value;

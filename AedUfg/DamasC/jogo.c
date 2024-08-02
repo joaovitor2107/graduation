@@ -21,9 +21,9 @@
         printBoard(screen, grid);
         int movechoosed = 0;
 
-            if(turn == WHITE){
+            if(turn == WHITE){ //bot turn
                 copy(copyGrid, grid);
-                minimax(6, copyGrid, WHITE, &bestMove);
+                minimax(20, copyGrid, WHITE, &bestMove, INT16_MIN, INT16_MAX);
                 fromPositions = bestMove.from;
                 destPositions = bestMove.dest;
                 
