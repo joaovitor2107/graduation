@@ -23,7 +23,7 @@
 
             if(turn == WHITE){ //bot turn
                 copy(copyGrid, grid);
-                minimax(20, copyGrid, WHITE, &bestMove, INT16_MIN, INT16_MAX);
+                minimax(10, copyGrid, WHITE, &bestMove, INT16_MIN, INT16_MAX);
                 fromPositions = bestMove.from;
                 destPositions = bestMove.dest;
                 
