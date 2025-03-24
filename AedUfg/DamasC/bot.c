@@ -264,3 +264,6 @@ int minimax(int depth, gridType grid[][8], int player, Move *bestMove, int alpha
     }
 
 }
+
+
+int	main { }
