@@ -53,6 +53,7 @@ split([X], [X], []).
 split([X,Y|Xs], [X|L1], [Y|L2]) :-
                 split(Xs, L1, L2).
 
+/* ordena chave-valor */
 merge(L, [], L).
 merge([], L, L).
 merge([(F1,C1)|R1], [(F2, C2)|R2], [(F1,C1)|R]) :-

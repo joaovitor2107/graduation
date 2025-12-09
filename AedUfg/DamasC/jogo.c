@@ -20,6 +20,12 @@
         
         printBoard(screen, grid);
         int movechoosed = 0;
+<<<<<<< HEAD
+=======
+        
+            while (!movechoosed) {
+                click = getClick(screen);
+>>>>>>> 24a9c66 (changes)
 
             if(turn == WHITE){ //bot turn
                 copy(copyGrid, grid);
