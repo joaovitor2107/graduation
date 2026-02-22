@@ -1,3 +1,3 @@
 # Computer Science Academic Projects
-Contains codes and study materials done by me, divided by different classes
+Contains codes and study materials done for my undergrad studies, divided by different classes 
 
