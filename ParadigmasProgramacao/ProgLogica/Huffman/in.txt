@@ -1,1 +1,0 @@
-testando comprimir a string usando huffman em prolog
