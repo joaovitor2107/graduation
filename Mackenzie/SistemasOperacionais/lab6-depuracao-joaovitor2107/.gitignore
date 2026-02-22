@@ -1,0 +1,45 @@
+# Executáveis compilados
+*.out
+*.exe
+original
+corrigido
+ex1
+ex2
+ex3
+ex4
+ex5
+ex6
+
+# Arquivos objeto
+*.o
+*.a
+*.so
+
+# Core dumps
+core
+core.*
+
+# Arquivos do Valgrind (apenas se gerados automaticamente)
+# Os arquivos .txt devem ser commitados manualmente
+vgcore.*
+*.valgrind
+
+# Arquivos temporários do editor
+*~
+*.swp
+*.swo
+.*.swp
+.*.swo
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-*
+
+# OS específico
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
